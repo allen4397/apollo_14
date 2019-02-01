@@ -32,6 +32,15 @@ RSpec.describe 'When user goes to astronaut index page' do
 
   describe 'When I look in the stats section' do
     it 'shows the average age of all astronauts' do
+      astronaut_1 = Astronaut.create(name: "Neil Armstrong", age: 37, job: "Commander")
+      astronaut_2 = Astronaut.create(name: "Buzz Aldrin", age: 39, job: "Other Guy")
+      avg_age = (astronaut_1.age + astronaut_2.age) / 2
+
+      visit astronauts_path
+
+      within "#statistics" do
+        expect(page).to have_content("Average Age: #{avg_age}")
+      end
     end
   end
 end

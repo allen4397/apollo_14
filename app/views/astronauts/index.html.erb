@@ -1,4 +1,6 @@
-
+<nav id="statistics">
+  <a>Average Age: <%= @avg_age %></a>
+</nav>
 <% @astronauts.each do |astronaut| %>
   <section id="astronaut-<%= astronaut.id %>">
     <p><%= astronaut.name %></p>
