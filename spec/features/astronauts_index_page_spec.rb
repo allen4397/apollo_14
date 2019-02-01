@@ -43,4 +43,26 @@ RSpec.describe 'When user goes to astronaut index page' do
       end
     end
   end
+
+  describe 'in each astronauts section' do
+    it 'shows me a list of missions in alphabetical order' do
+      astronaut_1 = Astronaut.create(name: "Neil Armstrong", age: 37, job: "Commander")
+      astronaut_2 = Astronaut.create(name: "Buzz Aldrin", age: 39, job: "Other Guy")
+      mission_1 = Mission.create(title: "Apollo 11", time_in_space: "3 months", astronauts: [astronaut_1, astronaut_2])
+      mission_2 = Mission.create(title: "Capricorn 4", time_in_space: "8 Weeks", astronauts: [astronaut_2])
+      mission_3 = Mission.create(title: "Apollo 13", time_in_space: "9 months", astronauts: [astronaut_1])
+
+      visit astronauts_path
+
+      within "#astronaut-#{astronaut_1.id}" do
+        expect(page).to have_content(mission_1.title)
+        expect(page).to have_content(mission_3.title)
+      end
+
+      within "#astronaut-#{astronaut_2.id}" do
+        expect(page).to have_content(mission_1.title)
+        expect(page).to have_content(mission_2.title)
+      end
+    end
+  end
 end

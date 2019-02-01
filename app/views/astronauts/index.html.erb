@@ -6,5 +6,8 @@
     <p><%= astronaut.name %></p>
     <p><%= astronaut.age %></p>
     <p><%= astronaut.job %></p>
+    <% astronaut.missions.each do |mission| %>
+    <p><%= mission.title %></p>
+    <% end %>
   </section>
 <% end %>
