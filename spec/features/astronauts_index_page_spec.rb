@@ -64,5 +64,25 @@ RSpec.describe 'When user goes to astronaut index page' do
         expect(page).to have_content(mission_2.title)
       end
     end
+
+    it 'shows me the total time in space for each astronaut' do
+      astronaut_1 = Astronaut.create(name: "Neil Armstrong", age: 37, job: "Commander")
+      astronaut_2 = Astronaut.create(name: "Buzz Aldrin", age: 39, job: "Other Guy")
+      mission_1 = Mission.create(title: "Apollo 11", time_in_space: "3 months", astronauts: [astronaut_1, astronaut_2])
+      mission_2 = Mission.create(title: "Capricorn 4", time_in_space: "8 months", astronauts: [astronaut_2])
+      mission_3 = Mission.create(title: "Apollo 13", time_in_space: "9 months", astronauts: [astronaut_1])
+
+      visit astronauts_path
+
+      save_and_open_page
+
+      within "#astronaut-#{astronaut_1.id}" do
+        expect(page).to have_content(astronaut_1.total_time_in_space)
+      end
+
+      within "#astronaut-#{astronaut_2.id}" do
+        expect(page).to have_content(astronaut_2.total_time_in_space)
+      end
+    end
   end
 end
